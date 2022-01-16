@@ -22,3 +22,4 @@ spring:
                 baseMessage: Spring Cloud Gateway ApiFilter
                 preLogger: true
                 postLogger: true
+            - name: ResponseBody

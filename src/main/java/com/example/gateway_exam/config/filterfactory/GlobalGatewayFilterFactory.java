@@ -1,4 +1,4 @@
-package com.example.gateway_exam.config.filter;
+package com.example.gateway_exam.config.filterfactory;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -9,22 +9,22 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 @Component
-public class ApiGatewayFilterFactory extends AbstractGatewayFilterFactory<ApiGatewayFilterFactory.Config> {
+public class GlobalGatewayFilterFactory extends AbstractGatewayFilterFactory<GlobalGatewayFilterFactory.Config> {
 
-    public ApiGatewayFilterFactory() {
+    public GlobalGatewayFilterFactory() {
         super(Config.class);
     }
 
     @Override
     public GatewayFilter apply(Config config) {
-        return (exchange, chain) -> {
-            log.info("ApiFilter baseMessage>>>>>> {}", config.getBaseMessage());
+        return (exchange, chain) ->{
+            log.info("GlobalFilter baseMessage>>>>>> {}", config.getBaseMessage());
             if (config.isPreLogger()) {
-                log.info("ApiFilter Start>>>>>> {}", exchange.getRequest());
+                log.info("GlobalFilter Start>>>>>> {}", exchange.getRequest());
             }
-            return chain.filter(exchange).then(Mono.fromRunnable(() -> {
+            return chain.filter(exchange).then(Mono.fromRunnable(()->{
                 if (config.isPostLogger()) {
-                    log.info("ApiFilter End>>>>>>" + exchange.getResponse());
+                    log.info("GlobalFilter End>>>>>>" + exchange.getResponse());
                 }
             }));
         };
