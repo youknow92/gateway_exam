@@ -1,0 +1,24 @@
+server:
+  port: 9000
+spring:
+  cloud:
+    gateway:
+      default-filters:
+        - name: Global
+          args:
+            baseMessage: Spring Cloud Gateway GlobalFilter
+            preLogger: true
+            postLogger: true
+      routes:
+#        api: "http://localhost:9080/"
+        - id: api-server
+          uri: http://localhost:9080/
+          predicates:
+            - Path=/api/**
+          filters:
+#            - AddRequestParameter=red, blue
+            - name: Api
+              args:
+                baseMessage: Spring Cloud Gateway ApiFilter
+                preLogger: true
+                postLogger: true
